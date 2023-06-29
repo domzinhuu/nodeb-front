@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { LoginInput } from "./components/LoginInput";
 import { LoginButton, LoginContainer, LoginForm } from "./styles";
 import { LockKey, LockKeyOpen } from "phosphor-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AuthenticationContext } from "../../contexts/AuthenticationContext";
 
 const loginFormSchema = z.object({
   username: z.string(),
@@ -16,6 +17,8 @@ type LoginFormInputs = z.infer<typeof loginFormSchema>;
 
 export function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const { auth } = useContext(AuthenticationContext);
+  const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm<LoginFormInputs>({
     resolver: zodResolver(loginFormSchema),
@@ -27,8 +30,13 @@ export function LoginPage() {
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleLogin = (data: LoginFormInputs) => {
-    console.log(data);
+  const handleLogin = async (data: LoginFormInputs) => {
+    const user = await auth(data.username, data.password);
+    
+    if (user) {
+      navigate("/dashboard");
+      return;
+    }
   };
 
   return (
