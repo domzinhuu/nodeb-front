@@ -2,7 +2,6 @@ import { css, styled } from "styled-components";
 
 interface LoginInputContainerProps {
   gap?: number;
-  hasFocus?: boolean;
 }
 
 export const LoginInputContainer = styled.div<LoginInputContainerProps>`
@@ -21,16 +20,15 @@ export const LoginInputContainer = styled.div<LoginInputContainerProps>`
       font-size: 1.125rem;
       line-height: 1.75rem;
       position: absolute;
+    }
 
-      ${(props) =>
-        props.hasFocus &&
-        css`
-          transform: translateY(-25px);
-          color: ${props.theme["purple-500"]};
-          font-size: 0.875rem;
-          line-height: 1rem;
-          font-weight: bold;
-        `}
+    input:focus + label,
+    input:valid + label {
+      transform: translateY(-25px);
+      color: ${(props) => props.theme["purple-500"]};
+      font-size: 0.875rem;
+      line-height: 1rem;
+      font-weight: bold;
     }
 
     svg {
@@ -41,6 +39,7 @@ export const LoginInputContainer = styled.div<LoginInputContainerProps>`
       font-size: 1.5rem;
       line-height: 2rem;
       cursor: pointer;
+      z-index: 2;
     }
 
     input {
@@ -51,6 +50,7 @@ export const LoginInputContainer = styled.div<LoginInputContainerProps>`
       border-bottom: 1px solid ${(props) => props.theme["gray-400"]};
       outline: none;
       background: transparent;
+      z-index: 1;
     }
   }
 `;

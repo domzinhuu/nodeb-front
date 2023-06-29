@@ -15,7 +15,7 @@ export const LoginContainer = styled.main`
     text-align: center;
 
     h1 {
-      padding-bottom: 2rem;
+      padding-bottom: 0.5rem;
       text-transform: uppercase;
       font-weight: 800;
       font-size: 3.75rem;
@@ -27,6 +27,10 @@ export const LoginContainer = styled.main`
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
+    }
+
+    p{
+      padding-bottom: 1rem;
     }
   }
 `;
